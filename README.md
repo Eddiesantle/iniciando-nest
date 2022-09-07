@@ -177,3 +177,15 @@ Rodar projeto
 ```bash
 npm run start:dev
 ```
+
+## git github do projeto
+
+```bash
+git init
+```
+```bash
+git add .
+```
+```bash
+git add .
+```
