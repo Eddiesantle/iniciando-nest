@@ -1,0 +1,33 @@
+GET http://localhost:8000/bank-accounts
+
+###
+GET http://localhost:8000/bank-accounts/7cd456a7-5fc4-4ce9-875e-3c370efb5c6b
+
+###
+POST http://localhost:8000/bank-accounts
+Content-Type: application/json
+
+{
+    "account_number": "3333-33"
+}
+
+###
+PATCH http://localhost:8000/bank-accounts/123
+Content-Type: application/json
+
+{
+    "account_number": "3333-33"
+}
+
+###
+DELETE http://localhost:8000/bank-accounts/123
+
+###
+POST http://localhost:8000/bank-accounts/tranfer
+Content-Type: application/json
+
+{
+    "from": "1111-11",
+    "to": "3333-33",
+    "amount": 100
+}
