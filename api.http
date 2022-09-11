@@ -8,7 +8,7 @@ POST http://localhost:8000/bank-accounts
 Content-Type: application/json
 
 {
-    "account_number": "3333-33"
+    "account_number": "4444-44"
 }
 
 ###
@@ -16,7 +16,7 @@ PATCH http://localhost:8000/bank-accounts/123
 Content-Type: application/json
 
 {
-    "account_number": "3333-33"
+    "account_number": "4444-44"
 }
 
 ###

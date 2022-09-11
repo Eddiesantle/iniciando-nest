@@ -18,13 +18,14 @@ const typeorm_1 = require("typeorm");
 const bank_account_entity_1 = require("./entities/bank-account.entity");
 const typeorm_2 = require("@nestjs/typeorm");
 let BankAccountsService = class BankAccountsService {
-    constructor(repo) {
+    constructor(repo, dataSource) {
         this.repo = repo;
+        this.dataSource = dataSource;
     }
     async create(createBankAccountDto) {
         const bankAccount = this.repo.create({
             account_number: createBankAccountDto.account_number,
-            balance: 0
+            balance: 0,
         });
         await this.repo.insert(bankAccount);
         return bankAccount;
@@ -36,18 +37,33 @@ let BankAccountsService = class BankAccountsService {
         return this.repo.findOneBy({ id });
     }
     async transfer(from, to, amount) {
-        const fromAccont = await this.repo.findOneBy({ account_number: from });
-        const toAccont = await this.repo.findOneBy({ account_number: to });
-        fromAccont.balance -= amount;
-        toAccont.balance += amount;
-        this.repo.save(fromAccont);
-        this.repo.save(toAccont);
+        const queryRunner = this.dataSource.createQueryRunner();
+        try {
+            await queryRunner.startTransaction();
+            const fromAccont = await this.repo.findOneBy({ account_number: from });
+            const toAccont = await this.repo.findOneBy({ account_number: to });
+            fromAccont.balance -= amount;
+            toAccont.balance += amount;
+            this.repo.save(fromAccont);
+            this.repo.save(toAccont);
+            await queryRunner.commitTransaction();
+        }
+        catch (e) {
+            await queryRunner.rollbackTransaction();
+            console.error(e);
+            throw e;
+        }
     }
 };
 BankAccountsService = __decorate([
-    (0, common_1.Injectable)(),
+    (0, common_1.Injectable)({
+        scope: common_1.Scope.REQUEST,
+        durable: true
+    }),
     __param(0, (0, typeorm_2.InjectRepository)(bank_account_entity_1.BankAccount)),
-    __metadata("design:paramtypes", [typeorm_1.Repository])
+    __param(1, (0, common_1.Inject)((0, typeorm_2.getDataSourceToken)())),
+    __metadata("design:paramtypes", [typeorm_1.Repository,
+        typeorm_1.DataSource])
 ], BankAccountsService);
 exports.BankAccountsService = BankAccountsService;
 //# sourceMappingURL=bank-accounts.service.js.map
