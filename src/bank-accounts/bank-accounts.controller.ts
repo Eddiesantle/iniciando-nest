@@ -1,8 +1,16 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  HttpCode,
+} from '@nestjs/common';
 import { BankAccountsService } from './bank-accounts.service';
 import { CreateBankAccountDto } from './dto/create-bank-account.dto';
 import { TransferBankAccountDto } from './dto/transfer-bank-account.dto';
-
 
 @Controller('bank-accounts')
 export class BankAccountsController {
@@ -25,12 +33,11 @@ export class BankAccountsController {
 
   @HttpCode(204)
   @Post('tranfer')
-  transfer(@Body() transferDto: TransferBankAccountDto ){
+  transfer(@Body() transferDto: TransferBankAccountDto) {
     return this.bankAccountsService.transfer(
       transferDto.from,
       transferDto.to,
-      transferDto.amount
-    )
+      transferDto.amount,
+    );
   }
-
 }

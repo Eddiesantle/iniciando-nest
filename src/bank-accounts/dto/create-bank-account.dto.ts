@@ -1,3 +1,3 @@
 export class CreateBankAccountDto {
-    account_number: string
+  account_number: string;
 }

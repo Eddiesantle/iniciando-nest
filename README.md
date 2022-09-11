@@ -368,3 +368,130 @@ async create(createBankAccountDto: CreateBankAccountDto) {
     return bankAccount
   }
 ```
+
+# Nest.js com Domain Driven Design (DDD)
+F
+## O que temos dentro de um banco?
+
+Dominio bancario
+
+Linguagem Ubiqua:
+- Contas bancarias
+- Depósito
+- Saque
+- Extrato das transações
+
+Modelo:
+Conta bancaria(saldo, n° da conta) ---> Deposito ---> Conta bancaria(saldo, n° da conta)
+Conta bancaria(saldo, n° da conta) ---> Teminal ---> Saque
+
+Criar pasta para Dominio DDD - Com o minimo de interferencia/framework externa 
+
+Declarar as operações
+src/@core/domain/bank-account.ts
+```bank-account.ts
+export class BankAccount {
+  id: string;
+
+  balance: number;
+
+  account_number: string;
+
+  constructor(id: string, balance, number, account_number: string) {
+    this.id = id;
+    this.balance = balance;
+    this.account_number = account_number;
+  }
+}
+```
+## realizar testes - Jest Runner
+
+arquivo de teste:
+src/@core/domain/bank-account.spec.ts
+```bank-account.spec.ts
+import { BankAccount } from "./bank-account";
+
+describe('BankAccount Unit Tests', () => {
+  it('shouldd create a bank account', () => {
+    const bankAccount = new BankAccount('123', 100, '12345');
+    expect(bankAccount.id).toBe('100');
+    expect(bankAccount.balance).toBe(100);
+    expect(bankAccount.account_number).toBe('12345');
+  });
+});
+```
+
+intalar extenção: Jest Runner
+
+Testar toda aplicação
+```node
+npm run test --
+```
+
+Testar arquivo selecionado
+npm run test -- [DIRETORIO_ARQUIVO]
+```node
+npm run test -- src/@core/domain/bank-account.spec.ts    
+```
+
+## Necessidade de aplicação
+
+coordenar as operação que deve fazer
+
+// DDD - ID auto incrementado 
+
+src/@core/bank-account-service.ts
+```bank-account-service.ts
+import { BankAccount } from './domain/bank-account';
+
+export class BankAccountService { // application Service
+
+constructor(private bankAccountRepo: BankAccountRepository){}
+
+  create(account_number: string) {
+    const bankAccount = new BankAccount('123', 0, account_number);
+    this.bankAccountRepo.insert(bankAccount)
+    return bankAccount;
+  }
+}
+
+```
+
+## interface para não ficar preso ao banco
+
+src/@core/domain/bank-account.repository.ts
+```bank-account-service.ts
+import { BankAccount } from "./bank-account";
+
+export interface BankAccountRepository{
+    insert(bankAccount: BankAccount): Promise<void>
+}
+
+```
+
+## infra - preocupação tecnica
+
+Criar
+src/@core/infra
+src/@core/infra/db
+src/@core/infra/db/bank-account-typeorm.repository.ts
+
+```
+import { Repository } from 'typeorm';
+import { BankAccount } from 'src/@core/domain/bank-account';
+import { BankAccountRepository } from 'src/@core/domain/bank-account.repository';
+import { BankAccountTypeOrm } from 'src/bank-accounts/entities/bank-account.entity';
+
+export class BankAccountTypeOrmRepository implements BankAccountRepository {
+  constructor(private ormRepo: Repository<BankAccountTypeOrm>) {}
+
+  async insert(bankAccount: BankAccount): Promise<void> {
+    const model = this.ormRepo.create(bankAccount);
+    await this.ormRepo.save(model);
+    throw new Error('Method not implemented');
+  }
+}
+
+```
+
+// repositorio DDD - lida com a representação da entidade do DDD
