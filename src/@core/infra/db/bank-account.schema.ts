@@ -1,5 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
+
 // modelo anemico | entidade anemica - Martin Fowler
 @Entity()
 export class BankAccountSchema {

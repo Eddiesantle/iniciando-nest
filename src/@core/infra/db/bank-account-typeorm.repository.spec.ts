@@ -1,7 +1,7 @@
 import { DataSource, Repository } from 'typeorm';
 import { BankAccount } from '../../domain/bank-account';
-import { BankAccountTypeOrmRepository } from './bank-account-typeorm.repository';
 import { BankAccountSchema } from './bank-account.schema';
+import { BankAccountTypeOrmRepository } from './bank-account-typeorm.repository';
 
 describe('BanckAccountTypeOrmRepository Test', () => {
   let dataSource: DataSource;
