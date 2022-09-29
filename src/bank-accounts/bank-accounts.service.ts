@@ -5,9 +5,11 @@ import { BankAccountSchema } from './../@core/infra/db/bank-account.schema';
 import { InjectRepository, getDataSourceToken } from '@nestjs/typeorm';
 
 @Injectable({
-  scope: Scope.REQUEST,
-  durable: true,
+  // scope: Scope.REQUEST,
+  // durable: true,
 })
+
+
 export class BankAccountsService {
   constructor(
     @InjectRepository(BankAccountSchema)
@@ -58,3 +60,4 @@ export class BankAccountsService {
     }
   }
 }
+

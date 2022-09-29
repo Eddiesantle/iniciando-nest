@@ -1,14 +1,14 @@
 GET http://localhost:8000/bank-accounts
 
 ###
-GET http://localhost:8000/bank-accounts/7cd456a7-5fc4-4ce9-875e-3c370efb5c6b
+GET http://localhost:8000/bank-accounts/e91c0cf4-c591-467b-8c0a-76ccb33e5d9b
 
 ###
 POST http://localhost:8000/bank-accounts
 Content-Type: application/json
 
 {
-    "account_number": "4444-44"
+    "account_number": "3333-33"
 }
 
 ###
