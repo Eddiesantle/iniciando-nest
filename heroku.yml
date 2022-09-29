@@ -1,10 +1,4 @@
-version: '3'
-
-services:
-  app:
-    build: .
-    ports:
-      - 8000:3000
-    volumes:
-      - .:/home/node/app
+build:
+  docker:
+    web: Dockerfile
   
