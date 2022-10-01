@@ -5,11 +5,11 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   // Constants
-const PORT = process.env.PORT || 3002;
-const HOST = '127.0.0.1';
+const PORT = process.env.PORT || 3000;
+const HOST = process.env.HOST || '0.0.0.0';
 
-  await app.listen(PORT);
-  //await app.listen(PORT, HOST);
+  //await app.listen(PORT);
+  await app.listen(PORT, HOST);
   console.log(`Running on http://${HOST}:${PORT}`);
 }
 bootstrap();
