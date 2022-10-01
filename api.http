@@ -1,10 +1,10 @@
-GET http://localhost:8000/bank-accounts
+GET http://localhost/bank-accounts
 
 ###
-GET http://localhost:8000/bank-accounts/e91c0cf4-c591-467b-8c0a-76ccb33e5d9b
+GET http://localhost/bank-accounts/e91c0cf4-c591-467b-8c0a-76ccb33e5d9b
 
 ###
-POST http://localhost:8000/bank-accounts
+POST http://localhost/bank-accounts
 Content-Type: application/json
 
 {
@@ -12,7 +12,7 @@ Content-Type: application/json
 }
 
 ###
-PATCH http://localhost:8000/bank-accounts/123
+PATCH http://localhost/bank-accounts/123
 Content-Type: application/json
 
 {
@@ -20,10 +20,10 @@ Content-Type: application/json
 }
 
 ###
-DELETE http://localhost:8000/bank-accounts/123
+DELETE http://localhost/bank-accounts/123
 
 ###
-POST http://localhost:8000/bank-accounts/tranfer
+POST http://localhost/bank-accounts/tranfer
 Content-Type: application/json
 
 {
