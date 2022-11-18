@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { BankAccountsModule } from './bank-accounts/bank-accounts.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { BankAccountSchema } from './@core/infra/db/bank-account.schema';
+import { AnexosModule } from './anexos/anexos.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { BankAccountSchema } from './@core/infra/db/bank-account.schema';
       entities: [BankAccountSchema],
     }),
     BankAccountsModule,
+    AnexosModule,
   ],
   controllers: [AppController],
   providers: [AppService],

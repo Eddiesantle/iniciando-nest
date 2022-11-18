@@ -495,3 +495,6 @@ export class BankAccountTypeOrmRepository implements BankAccountRepository {
 ```
 
 // repositorio DDD - lida com a representação da entidade do DDD
+
+## Upload de arquivos 
+https://github.com/kuros/blog-code/tree/master/nestjs/gcp-storage

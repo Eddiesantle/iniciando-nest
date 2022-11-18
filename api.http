@@ -31,3 +31,6 @@ Content-Type: application/json
     "to": "3333-33",
     "amount": 100
 }
+
+###
+POST http://localhost/anexos/file
