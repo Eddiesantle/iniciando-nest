@@ -1,7 +1,18 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UseInterceptors,
+  UploadedFile,
+} from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
+import { Helper } from 'src/shared/healper';
 import { AnexosService } from './anexos.service';
 import { CreateAnexoDto } from './dto/create-anexo.dto';
 import { UpdateAnexoDto } from './dto/update-anexo.dto';
@@ -15,41 +26,67 @@ export class AnexosController {
     return this.anexosService.create(createAnexoDto);
   }
 
-  @Post('/file')
-  @UseInterceptors(FileInterceptor('file', {
-    storage: diskStorage({
-      destination: './files',
-      filename: (req, file, callback) => {
-            const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9)
-            const ext = extname(file.originalname)
-            const filename = `${file.originalname}-${uniqueSuffix}${ext}`
-
-            callback(null, filename)
-      }
-    })
-  }))
-  handleUpload(@UploadedFile() file) {
-    return this.anexosService.handleUpload(file);
+  @Post(':idProntuario/:idUsuario/post-file')
+  @UseInterceptors(
+    FileInterceptor('profile', {
+      storage: diskStorage({
+        destination: './files/paciente',
+        filename: Helper.customFilaName,
+      }),
+    }),
+  )
+  handleUpload(
+    @Param('idProntuario') idProntuario: string,
+    @Param('idUsuario') idUsuario: string,
+    @UploadedFile() profile) {
+    return this.anexosService.handleUpload(idProntuario, idUsuario, profile);
   }
-  
-  @Get()
-  findAll() {
-    return this.anexosService.findAll();
+
+  @Post(':idUsuario/post-file-avatar')
+  @UseInterceptors(
+    FileInterceptor('profile', {
+      storage: diskStorage({
+        destination: './files/paciente',
+        filename: Helper.customFilaName,
+      }),
+    }),
+  )
+  handleUploadAvatar(
+    @Param('idUsuario') idUsuario: string,
+    @UploadedFile() profile) {
+    return this.anexosService.handleUploadAvatar(idUsuario, profile);
+  }
+
+  @Get('/download/:file')
+  getFileDownload(@Param('file') file: string) {
+    return this.anexosService.getFileDownload(file);
+  }
+
+  @Get(':idProntuario/:idUsuario/list-file')
+  findAll(
+    @Param('idProntuario') idProntuario: string,
+    @Param('idUsuario') idUsuario: string,
+  ) {
+    return this.anexosService.findAll(idProntuario, idUsuario);
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.anexosService.findOne(+id);
   }
-  
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateAnexoDto: UpdateAnexoDto) {
     return this.anexosService.update(+id, updateAnexoDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.anexosService.remove(+id);
+  @Delete(':idFile/:idProntuario/:idUsuario')
+  deleteFile(
+    @Param('idFile') idFile: string,
+    @Param('idProntuario') idProntuario: string,
+    @Param('idUsuario') idUsuario: string,
+  ) {
+    console.log(idFile);
+    return this.anexosService.deleteFile(idProntuario,idUsuario,idFile);
   }
 }

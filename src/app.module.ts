@@ -5,6 +5,7 @@ import { BankAccountsModule } from './bank-accounts/bank-accounts.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { BankAccountSchema } from './@core/infra/db/bank-account.schema';
 import { AnexosModule } from './anexos/anexos.module';
+import { MulterModule } from '@nestjs/platform-express';
 
 @Module({
   imports: [
@@ -16,7 +17,7 @@ import { AnexosModule } from './anexos/anexos.module';
       entities: [BankAccountSchema],
     }),
     BankAccountsModule,
-    AnexosModule,
+    AnexosModule
   ],
   controllers: [AppController],
   providers: [AppService],
