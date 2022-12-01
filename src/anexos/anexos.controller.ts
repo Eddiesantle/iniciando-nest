@@ -39,7 +39,9 @@ export class AnexosController {
     @Param('idProntuario') idProntuario: string,
     @Param('idUsuario') idUsuario: string,
     @UploadedFile() profile) {
-    return this.anexosService.handleUpload(idProntuario, idUsuario, profile);
+
+      console.log('File->',profile)
+      return this.anexosService.handleUpload(idProntuario, idUsuario, profile);
   }
 
   @Post(':idUsuario/post-file-avatar')

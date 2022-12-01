@@ -14,8 +14,8 @@ export class AnexosService {
   constructor(configService: ConfigService) {
 
     this.storage = new Storage({
-      keyFilename: __dirname +'/key-apis-backend.json',
-      //keyFilename: 'apis-backend-880b0b1f87c7.json',
+      //keyFilename: __dirname +'/key-apis-backend.json', // Produção
+      keyFilename: './key-apis-backend.json', // Desenvolvimento
       projectId: 'apis-backend',
     });
 
@@ -77,8 +77,8 @@ export class AnexosService {
 
   
   async handleUpload(idProntuario: string, idUsuario: string, profile: Express.Multer.File) {
-    // console.log(idProntuario)
-    // console.log('files:', profile);
+    console.log(idProntuario)
+    console.log('files:', profile);
     // console.log('files:', profile.path);
     // console.log('files:', profile.originalname);
 

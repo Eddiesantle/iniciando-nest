@@ -8,6 +8,8 @@ export class Helper{
         const ext = extname(file.originalname)
         const filename = `${file.originalname}-${uniqueSuffix}${ext}`
 
+        console.log(filename)
+
         callback(null, filename)
         
         return filename
