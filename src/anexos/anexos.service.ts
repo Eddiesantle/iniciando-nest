@@ -14,13 +14,12 @@ export class AnexosService {
   constructor(configService: ConfigService) {
 
     this.storage = new Storage({
-      // keyFilename: './apis-backend-880b0b1f87c7.json',
-      keyFilename: require('apis-backend-880b0b1f87c7.json'),
+      keyFilename: __dirname +'/key-apis-backend.json',
+      //keyFilename: 'apis-backend-880b0b1f87c7.json',
       projectId: 'apis-backend',
     });
 
     this.bucketName = 'soultech-files';
-
 
     this.exemploEnv = configService.get<string>('pokemonService.apiKey')// exemplo para variavel de ambiente
 
